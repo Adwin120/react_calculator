@@ -2,10 +2,10 @@ import React from "react";
 import "./Calculator.scss"
 type stateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 interface CalculatorKeyboardProps {
-    setValue: stateSetter<string>
+    updateExpression: (callback: (leftPart: string, selection: string, rightPart: string) => string) => void
 }
-export const CalculatorKeyboard: React.FC<CalculatorKeyboardProps> = ({setValue }) => {
-    const appendToValue = (element: string) => () => setValue(current => current + element);
+export const CalculatorKeyboard: React.FC<CalculatorKeyboardProps> = ({updateExpression }) => {
+    const appendToValue = (element: string) => () => updateExpression((left, selection, right) => left + element + right);
 
     const digits = ["7", "8", "9", "4", "5", "6", "1", "2", "3"];
     const operators = ["^", "/", "*", "-", "+", "="];
