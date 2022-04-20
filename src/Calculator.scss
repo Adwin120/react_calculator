@@ -1,0 +1,70 @@
+.calculatorDisplay {
+    text-align: right;
+}
+
+.expressionDisplay {
+    
+}
+
+.valueDisplay {}
+
+$column-number: 4;
+
+@mixin all-border-grid($width, $style, $color) {
+    border: {
+        left: $width $style $color;
+        top: $width $style $color;
+        right: none;
+        bottom: none;
+    }
+    & > * {
+        border: {
+            right: $width $style $color;
+            bottom: $width $style $color;
+            top: none;
+            left: none;
+        }
+    }
+}
+
+.calculator-keyboard {
+    display: grid;
+    // grid-auto-flow: dense;
+    grid-template-columns: repeat($column-number, 1fr);
+    width: 55vw;
+    height: 75vw;
+    @include all-border-grid(1px, solid, black);
+}
+
+.calculator-button {
+    padding: 0;
+    margin: 0;
+    &:active {
+        box-shadow: inset 0px 0px 100px 0px rgba(0, 0, 0, 0.30);
+    }
+}
+
+
+.digit-key {
+    background-color: #e0e0e7;
+}
+
+
+.operator-key {
+    grid-column: 4;
+    background-color: rgb(250, 150, 20);
+}
+
+@for $i from 1 to 10 {
+    .operator-key-#{$i} {
+        grid-row: #{$i + 2};
+    }
+}
+
+.function-key {
+    background-color: #aaa
+}
+
+.bottom-row-key-1 {
+    grid-column-end: span 2;
+}
