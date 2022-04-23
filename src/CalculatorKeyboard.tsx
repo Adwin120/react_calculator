@@ -1,26 +1,26 @@
 import React from "react";
 import "./Calculator.scss"
-type stateSetter<T> = React.Dispatch<React.SetStateAction<T>>;
-interface CalculatorKeyboardProps {
-    updateExpression: (callback: (leftPart: string, selection: string, rightPart: string) => string) => void
-}
-export const CalculatorKeyboard: React.FC<CalculatorKeyboardProps> = ({updateExpression }) => {
-    const appendToValue = (element: string) => () => updateExpression((left, selection, right) => left + element + right);
 
+interface CalculatorKeyboardProps {
+    handleClick: (keyValue: string) => () => void
+}
+export const CalculatorKeyboard: React.FC<CalculatorKeyboardProps> = ({ handleClick }) => {
+    
     const digits = ["7", "8", "9", "4", "5", "6", "1", "2", "3"];
     const operators = ["^", "/", "*", "-", "+", "="];
     const functions = ["abs", "sin", "cos", "sqrt", "ln", "tg"];
-    const navigation = ["left", "right", "M+", "M-", "+-", "C", "CE", "back"]
-    const lastRow = ["0", "."];
-
+    const navigation = ["+-", "C", "CE", "back"]
+    const lastRow = ["0", ".",];
+    
+    
 
     return (
         <div className="calculator-keyboard">
-            <ButtonList values={navigation} cName="navigation-key" clickAction={appendToValue} />
-            <ButtonList values={functions} cName="function-key" clickAction={appendToValue} />
-            <ButtonList values={digits} cName="digit-key" clickAction={appendToValue} />
-            <ButtonList values={operators} cName="operator-key" clickAction={appendToValue} />
-            <ButtonList values={lastRow} cName="bottom-row-key" clickAction={appendToValue} />
+            <ButtonList values={navigation} cName="navigation-key" clickAction={handleClick} />
+            <ButtonList values={functions} cName="function-key" clickAction={handleClick} />
+            <ButtonList values={digits} cName="digit-key" clickAction={handleClick} />
+            <ButtonList values={operators} cName="operator-key" clickAction={handleClick} />
+            <ButtonList values={lastRow} cName="bottom-row-key" clickAction={handleClick} />
         </div>
     )
 }

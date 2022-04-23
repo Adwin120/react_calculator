@@ -1,9 +1,7 @@
 .calculatorDisplay {
-    text-align: right;
 }
 
 .expressionDisplay {
-    
 }
 
 .valueDisplay {}
@@ -57,7 +55,7 @@ $column-number: 4;
 
 @for $i from 1 to 10 {
     .operator-key-#{$i} {
-        grid-row: #{$i + 2};
+        grid-row: #{$i+1};
     }
 }
 
