@@ -13,15 +13,17 @@ export const CalculatorDisplay = React.forwardRef<Editor, Props>(({ inputState, 
     const output = evaluate(input);
 
     return (
-        <div className="calculatorDisplay">
-            <Editor
-                editorState={inputState}
-                onChange={onChange}
-                textAlignment="right"
-                ref={ref}
-                keyBindingFn={inputKeyBindings}
-            />
-            <div className="valueDisplay">
+        <div className="calculatord-isplay">
+            <div className="input-display">
+                <Editor
+                    editorState={inputState}
+                    onChange={onChange}
+                    textAlignment="right"
+                    ref={ref}
+                    keyBindingFn={inputKeyBindings}
+                />
+            </div>
+            <div className="value-display">
                 <output>{output}</output>
             </div>
         </div>

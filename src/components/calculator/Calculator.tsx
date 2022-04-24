@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import {CalculatorKeyboard} from "./Keyboard";
+import { CalculatorKeyboard } from "./Keyboard";
 import "./Calculator.scss"
-import {CalculatorDisplay, createEmptyInputState} from "./Display"
+import { CalculatorDisplay, createEmptyInputState } from "./Display"
 import { Editor, EditorState, Modifier } from "draft-js";
 
 export default function Calculator() {
@@ -33,10 +33,15 @@ export default function Calculator() {
     }
     return (
         <>
-            <CalculatorDisplay inputState={inputState} onChange={setInputState} ref={editorRef}/>
+            <CalculatorDisplay inputState={inputState} onChange={setInputState} ref={editorRef} />
             <div>
                 {/* additional user input could go here */}
-                <CalculatorKeyboard handleClick={typeToInput} />
+                <CalculatorKeyboard
+                    typeToInput={typeToInput}
+                    handleReturn={()=>{}}
+                    handleBackspace={()=>{}}
+                    handleClear={()=>{}}
+                />
             </div>
         </>
     )

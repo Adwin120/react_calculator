@@ -2,25 +2,48 @@ import React from "react";
 import "./Calculator.scss"
 
 interface CalculatorKeyboardProps {
-    handleClick: (keyValue: string) => () => void
+    typeToInput: (keyValue: string) => () => void,
+    handleReturn: () => void,
+    handleBackspace: () => void,
+    handleClear: () => void
 }
-export const CalculatorKeyboard: React.FC<CalculatorKeyboardProps> = ({ handleClick }) => {
-    
+export const CalculatorKeyboard: React.FC<CalculatorKeyboardProps> = ({
+    typeToInput,
+    handleReturn,
+    handleBackspace,
+    handleClear
+}) => {
     const digits = ["7", "8", "9", "4", "5", "6", "1", "2", "3"];
-    const operators = ["^", "/", "*", "-", "+", "="];
+    const operators = ["(", ")", "^", "/", "*", "-", "+"];
     const functions = ["abs", "sin", "cos", "sqrt", "ln", "tg"];
-    const navigation = ["(", ")","C", "back"]
-    const lastRow = ["0", ".",];
     
-    
-
     return (
         <div className="calculator-keyboard">
-            <ButtonList values={navigation} cName="navigation-key" clickAction={handleClick} />
-            <ButtonList values={functions} cName="function-key" clickAction={handleClick} />
-            <ButtonList values={digits} cName="digit-key" clickAction={handleClick} />
-            <ButtonList values={operators} cName="operator-key" clickAction={handleClick} />
-            <ButtonList values={lastRow} cName="bottom-row-key" clickAction={handleClick} />
+            <button
+                onClick={handleClear}
+                className="calculator-button clear-button"
+            >C</button>
+            <button
+                onClick={handleBackspace}
+                className="calculator-button backspace-button"
+            >back</button>
+
+            <ButtonList values={functions} cName="function-key" clickAction={typeToInput} />
+            <ButtonList values={digits} cName="digit-key" clickAction={typeToInput} />
+            <ButtonList values={operators} cName="operator-key" clickAction={typeToInput} />
+
+            <button
+                onClick={typeToInput("0")}
+                className="calculator-button button-0-digit"
+            >0</button>
+            <button
+                onClick={typeToInput(".")}
+                className="calculator-button"
+            >.</button>
+            <button
+                onClick={handleReturn}
+                className="calculator-button button-return"
+            >=</button>
         </div>
     )
 }

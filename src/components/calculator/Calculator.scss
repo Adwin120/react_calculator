@@ -1,16 +1,21 @@
-.calculatorDisplay {
+
+$input-color: black;
+$column-number: 4;
+
+.calculator-display {
+
 }
 
-.expressionDisplay {
+.input-display {
+    color: $input-color;
+    caret-color: $input-color;
 }
-
-.valueDisplay {
+.value-display {
     width:100%;
     text-align: right;
-    height:1em;
+    height:1.4em;
 }
 
-$column-number: 4;
 
 @mixin all-border-grid($width, $style, $color) {
     border: {
@@ -57,16 +62,25 @@ $column-number: 4;
     background-color: rgb(250, 150, 20);
 }
 
+
 @for $i from 1 to 10 {
     .operator-key-#{$i} {
-        grid-row: #{$i+1};
+        grid-row: #{$i - 1};
     }
+}
+.operator-key-1 {
+    grid-column: 3;
+    grid-row: 1;
 }
 
 .function-key {
     background-color: #aaa
 }
 
-.bottom-row-key-1 {
+.button-0-digit {
     grid-column-end: span 2;
+}
+
+.button-return {
+    background-color: lightblue;
 }
