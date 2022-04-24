@@ -1,7 +1,7 @@
-import { CompositeDecorator, ContentState, DraftStyleMap, Editor, EditorState, Modifier } from "draft-js";
+import { CompositeDecorator, Editor, EditorState } from "draft-js";
 import "draft-js/dist/Draft.css";
-import React, {useState} from "react";
-import { evaluate } from "mathjs"
+import React from "react";
+import { evaluate } from "../../utils/evaluationStrategies/mathjsEvaluate"
 
 interface Props {
     inputState: EditorState,
@@ -10,10 +10,8 @@ interface Props {
 
 export const CalculatorDisplay = React.forwardRef<Editor, Props>(({ inputState, onChange }, ref) => {
     const input = inputState.getCurrentContent().getPlainText();
-    let result = "";
-    try {
-        result = evaluate(input)
-    } catch (error) {}
+    const output = evaluate(input);
+
     return (
         <div className="calculatorDisplay">
             <Editor
@@ -24,45 +22,61 @@ export const CalculatorDisplay = React.forwardRef<Editor, Props>(({ inputState, 
                 keyBindingFn={inputKeyBindings}
             />
             <div className="valueDisplay">
-                <output>{result}</output>
+                <output>{output}</output>
             </div>
         </div>
     );
 });
 
 const inputKeyBindings = (e: React.KeyboardEvent<{}>) => {
-    const {key} = e;
+    const { key } = e;
     console.log(key)
-    switch (key) {
-        case "ArrowDown":
-        case "ArrowLeft":
-        case "ArrowUp":
-        case "ArrowRight":
-        case "Backspace":
-            //fall through to default
-            return null
-    }
+
+    //null - fall through to default
+
+    //allow arrows and digits
+    if (key.startsWith("Arrow")) return null;
+    if (!isNaN(+key)) return null;
+
+    const allowedInputs = ["Backspace", "+", "-", "*", "/", "^", "=", "(", ")", "."]
+    if (allowedInputs.includes(key)) return null;
+
     return "handled"
 }
 
-//TODO major failure, change this template to apply diffrent colors to operators
-const caret: React.FC<{offsetKey: string}> = ({offsetKey}) => {
-    return (
-        <span data-offset-key={offsetKey}>test</span>
-    )
+const inputStyles = {
+    operator: {
+        color: "blue"
+    }
+};
+
+type inputDecoratorComponent = React.FC<{
+    offsetKey: string,
+    children: React.ReactNode
+}>
+
+const operator: inputDecoratorComponent = ({ offsetKey, children }) => <span
+    data-offset-key={offsetKey}
+    style={inputStyles.operator}
+>{children}</span>
+
+type strategyCallback = (start: number, end: number) => void;
+const regexStrategy = (regex: RegExp, contentState: Draft.ContentBlock, callback: strategyCallback) => {
+    const text = contentState.getText();
+    for (const match of text.matchAll(regex)) {
+        callback(match.index!, match.index! + match[0].length)
+    }
 }
 
-const customCaretDecorator = new CompositeDecorator([
+const inputDecorator = new CompositeDecorator([
     {
-        strategy: (_, callback, contentState) => {
-            const selection = contentState.getSelectionAfter()
-            console.log(selection.getStartOffset())
-            callback(selection.getStartOffset(), selection.getStartOffset()+1)
+        strategy: (contentBlock, callback) => {
+            regexStrategy(/[\^/*+-]/g, contentBlock, callback)
         },
-        component: caret
+        component: operator
     }
 ])
 
 export const createEmptyInputState = () => {
-    return EditorState.createEmpty()
+    return EditorState.createEmpty(inputDecorator)
 }
