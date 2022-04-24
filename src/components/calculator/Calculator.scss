@@ -90,6 +90,10 @@ $column-number: 4;
     background-color: #aaa
 }
 
+.clear-button, .backspace-button {
+    background-color: hsl(0, 0, 90%);
+}
+
 .button-0-digit {
     grid-column-end: span 2;
 }

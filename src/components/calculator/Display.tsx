@@ -170,7 +170,7 @@ const regexStrategy = (regex: RegExp, contentState: Draft.ContentBlock, callback
 const inputDecorator = new Draft.CompositeDecorator([
     {
         strategy: (contentBlock, callback) => {
-            regexStrategy(/[\^/*+-]/g, contentBlock, callback)
+            regexStrategy(/[()^/*+-]/g, contentBlock, callback)
         },
         component: operator
     }
