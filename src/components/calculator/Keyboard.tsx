@@ -2,13 +2,13 @@ import React from "react";
 import "./Calculator.scss"
 
 interface CalculatorKeyboardProps {
-    typeToInput: (keyValue: string) => () => void,
+    handleInput: (keyValue: string) => () => void,
     handleReturn: () => void,
     handleBackspace: () => void,
     handleClear: () => void
 }
 export const CalculatorKeyboard: React.FC<CalculatorKeyboardProps> = ({
-    typeToInput,
+    handleInput,
     handleReturn,
     handleBackspace,
     handleClear
@@ -28,16 +28,16 @@ export const CalculatorKeyboard: React.FC<CalculatorKeyboardProps> = ({
                 className="calculator-button backspace-button"
             >back</button>
 
-            <ButtonList values={functions} cName="function-key" clickAction={typeToInput} />
-            <ButtonList values={digits} cName="digit-key" clickAction={typeToInput} />
-            <ButtonList values={operators} cName="operator-key" clickAction={typeToInput} />
+            <ButtonList values={functions} cName="function-key" clickAction={handleInput} />
+            <ButtonList values={digits} cName="digit-key" clickAction={handleInput} />
+            <ButtonList values={operators} cName="operator-key" clickAction={handleInput} />
 
             <button
-                onClick={typeToInput("0")}
+                onClick={handleInput("0")}
                 className="calculator-button button-0-digit"
             >0</button>
             <button
-                onClick={typeToInput(".")}
+                onClick={handleInput(".")}
                 className="calculator-button"
             >.</button>
             <button
