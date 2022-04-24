@@ -1,39 +1,40 @@
 import { useRef, useState } from "react";
 import { CalculatorKeyboard } from "./Keyboard";
 import "./Calculator.scss"
-import { CalculatorDisplay, createEmptyInputState, deleteSelection, moveOutputToInput, typeToInput } from "./Display"
-import { Editor } from "draft-js";
+import * as Display from "./Display"
 import { evaluate } from "mathjs";
+
+import type { Editor } from "draft-js";
 
 export default function Calculator() {
 
     const editorRef = useRef<Editor>(null);
-    const [inputState, setInputState] = useState(createEmptyInputState);
+    const [inputState, setInputState] = useState(Display.createEmptyInputState);
 
     const handleInput = (keyValue: string) => () => {
         editorRef.current?.focus();
-        setInputState(currentState => typeToInput(currentState, keyValue));
+        setInputState(currentState => Display.typeToInput(currentState, keyValue));
     }
     const handleReturn = () => {
         editorRef.current?.focus();
         const input = inputState.getCurrentContent().getPlainText();
         const output = evaluate(input);
-        setInputState(currentState => moveOutputToInput(currentState, output));
+        setInputState(currentState => Display.moveOutputToInput(currentState, output));
     }
 
     const handleClear = () => {
         editorRef.current?.focus();
-        setInputState(createEmptyInputState)
+        setInputState(Display.createEmptyInputState)
     }
 
     const handleBackspace = () => {
         editorRef.current?.focus();
-        setInputState(currentState => deleteSelection(currentState));
+        setInputState(currentState => Display.deleteSelection(currentState));
     }
 
     return (
-        <>
-            <CalculatorDisplay inputState={inputState} onChange={setInputState} ref={editorRef} />
+        <div className="calculator">
+            <Display.CalculatorDisplay inputState={inputState} onChange={setInputState} ref={editorRef} />
             <div>
                 {/* additional user input could go here */}
                 <CalculatorKeyboard
@@ -43,6 +44,6 @@ export default function Calculator() {
                     handleClear={handleClear}
                 />
             </div>
-        </>
+        </div>
     )
 }

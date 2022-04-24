@@ -1,7 +1,9 @@
-import Draft, { CompositeDecorator, DraftHandleValue, Editor, EditorState, Modifier, SelectionState } from "draft-js";
+import Draft, { Editor, EditorState, Modifier } from "draft-js";
 import "draft-js/dist/Draft.css";
 import React from "react";
 import { evaluate } from "../../utils/evaluationStrategies/mathjsEvaluate"
+
+import type { SelectionState, DraftHandleValue } from "draft-js";
 
 const outputFormatter = new Intl.NumberFormat(undefined, {
     useGrouping: false,
@@ -33,7 +35,7 @@ export const CalculatorDisplay = React.forwardRef<Editor, Props>(({ inputState, 
     }
 
     return (
-        <div className="calculatord-isplay">
+        <div className="calculator-display">
             <div className="input-display">
                 <Editor
                     editorState={inputState}
@@ -52,6 +54,7 @@ export const CalculatorDisplay = React.forwardRef<Editor, Props>(({ inputState, 
 });
 
 const inputKeyBindings = (e: React.KeyboardEvent<{}>) => {
+    const { getDefaultKeyBinding, KeyBindingUtil } = Draft;
     const { key } = e;
     console.log(key);
 
@@ -60,13 +63,19 @@ const inputKeyBindings = (e: React.KeyboardEvent<{}>) => {
     //allow navigation, digits and operators
     if (key.startsWith("Arrow")) return null;
     if (!isNaN(+key)) return null;
-
-    const allowedInputs = ["+", "-", "*", "/", "^", "=", "(", ")", "."]
+    const allowedInputs = ["+", "-", "*", "/", "^", "(", ")", "."]
     if (allowedInputs.includes(key)) return null;
+    
+    //allow undo, redo
+    if(KeyBindingUtil.isCtrlKeyCommand(e) && (key === "z" || key === "y")) {
+        return getDefaultKeyBinding(e);
+    }
 
-    if (key === "Enter") return "equal";
+    //custom bindings
+    if (key === "Enter" || key === "=") return "equal";
     if (key === "Delete") return "C";
     if (key === "Backspace") return "back";
+
     //block anything else
     return "no-op";
 }
@@ -158,7 +167,7 @@ const regexStrategy = (regex: RegExp, contentState: Draft.ContentBlock, callback
     }
 }
 
-const inputDecorator = new CompositeDecorator([
+const inputDecorator = new Draft.CompositeDecorator([
     {
         strategy: (contentBlock, callback) => {
             regexStrategy(/[\^/*+-]/g, contentBlock, callback)
