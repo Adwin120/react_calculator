@@ -4,7 +4,11 @@
 .expressionDisplay {
 }
 
-.valueDisplay {}
+.valueDisplay {
+    width:100%;
+    text-align: right;
+    height:1em;
+}
 
 $column-number: 4;
 

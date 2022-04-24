@@ -11,6 +11,7 @@
     "@types/react": "^18.0.3",
     "@types/react-dom": "^18.0.0",
     "draft-js": "^0.11.7",
+    "mathjs": "^10.5.0",
     "react": "^18.0.0",
     "react-contenteditable": "^3.3.6",
     "react-dom": "^18.0.0",

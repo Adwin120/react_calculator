@@ -1,6 +1,7 @@
 import { CompositeDecorator, ContentState, DraftStyleMap, Editor, EditorState, Modifier } from "draft-js";
 import "draft-js/dist/Draft.css";
-import React from "react";
+import React, {useState} from "react";
+import { evaluate } from "mathjs"
 
 interface Props {
     inputState: EditorState,
@@ -8,7 +9,11 @@ interface Props {
 }
 
 export const CalculatorDisplay = React.forwardRef<Editor, Props>(({ inputState, onChange }, ref) => {
-
+    const input = inputState.getCurrentContent().getPlainText();
+    let result = "";
+    try {
+        result = evaluate(input)
+    } catch (error) {}
     return (
         <div className="calculatorDisplay">
             <Editor
@@ -18,7 +23,9 @@ export const CalculatorDisplay = React.forwardRef<Editor, Props>(({ inputState, 
                 ref={ref}
                 keyBindingFn={inputKeyBindings}
             />
-            <output className="valueDisplay">output</output>
+            <div className="valueDisplay">
+                <output>{result}</output>
+            </div>
         </div>
     );
 });

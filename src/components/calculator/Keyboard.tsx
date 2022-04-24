@@ -9,7 +9,7 @@ export const CalculatorKeyboard: React.FC<CalculatorKeyboardProps> = ({ handleCl
     const digits = ["7", "8", "9", "4", "5", "6", "1", "2", "3"];
     const operators = ["^", "/", "*", "-", "+", "="];
     const functions = ["abs", "sin", "cos", "sqrt", "ln", "tg"];
-    const navigation = ["+-", "C", "CE", "back"]
+    const navigation = ["(", ")","C", "back"]
     const lastRow = ["0", ".",];
     
     

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import {CalculatorKeyboard} from "./CalculatorKeyboard";
+import {CalculatorKeyboard} from "./Keyboard";
 import "./Calculator.scss"
-import {CalculatorDisplay, createEmptyInputState} from "./CalculatorDisplay"
+import {CalculatorDisplay, createEmptyInputState} from "./Display"
 import { Editor, EditorState, Modifier } from "draft-js";
 
 type calculatorMode = 'scientific' | 'quadratic';
