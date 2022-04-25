@@ -15,7 +15,7 @@ export const CalculatorKeyboard: React.FC<CalculatorKeyboardProps> = ({
 }) => {
     const digits = ["7", "8", "9", "4", "5", "6", "1", "2", "3"];
     const operators = ["(", ")", "^", "/", "*", "-", "+"];
-    const functions = ["abs", "sin", "cos", "sqrt", "ln", "tg"];
+    const functions = ["abs", "sin", "cos", "sqrt", "log", "tan"];
     
     return (
         <div className="calculator-keyboard">
