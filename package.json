@@ -13,10 +13,8 @@
     "draft-js": "^0.11.7",
     "mathjs": "^10.5.0",
     "react": "^18.0.0",
-    "react-contenteditable": "^3.3.6",
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.1",
-    "react-use-caret-position": "^1.0.3",
     "sass": "^1.50.0",
     "typescript": "^4.6.3",
     "web-vitals": "^2.1.4"
@@ -46,6 +44,8 @@
     ]
   },
   "devDependencies": {
-    "@types/draft-js": "^0.11.9"
-  }
+    "@types/draft-js": "^0.11.9",
+    "gh-pages": "^3.2.3"
+  },
+  "homepage": "https://adwin120.github.io/react_calculator/"
 }

@@ -33,7 +33,7 @@ export default function Calculator() {
     }
 
     return (
-        <div className="calculator">
+        <div className="calculator" inputMode="none">
             <Display.CalculatorDisplay inputState={inputState} onChange={setInputState} ref={editorRef} />
             <div>
                 {/* additional user input could go here */}

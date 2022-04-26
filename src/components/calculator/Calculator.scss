@@ -10,21 +10,23 @@ $column-number: 4;
 }
 
 .calculator-display {
+    width: min(90vw, 450px);
     max-height: 10vh;
     padding-right:5px;
+    overflow: auto;
 }
 
 .input-display {
     color: $input-color;
     caret-color: $input-color;
-    font-size: xx-large
+    font-size: xx-large;
 }
 .value-display {
     width:100%;
     text-align: right;
     height:1.4em;
     font-size: larger;
-    color: hsl(0, 0, 15%)
+    color: hsl(0, 0%, 15%)
 }
 
 
@@ -91,7 +93,7 @@ $column-number: 4;
 }
 
 .clear-button, .backspace-button {
-    background-color: hsl(0, 0, 90%);
+    background-color: hsl(0, 0%, 90%);
 }
 
 .button-0-digit {
