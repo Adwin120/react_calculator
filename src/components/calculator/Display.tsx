@@ -1,6 +1,6 @@
 import Draft, { Editor, EditorState, Modifier } from "draft-js";
 import "draft-js/dist/Draft.css";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { evaluate } from "../../utils/evaluationStrategies/mathjsEvaluate"
 
 import type { SelectionState, DraftHandleValue } from "draft-js";
@@ -34,9 +34,15 @@ export const CalculatorDisplay = React.forwardRef<Editor, Props>(({ inputState, 
         return "not-handled";
     }
 
+    //documentation is awful, maybe there was a prop for a direct ref but the link was broken
+    const inputContainer = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        inputContainer.current?.querySelector("[contentEditable]")?.setAttribute("inputmode", "none");
+    }, []);
+
     return (
         <div className="calculator-display">
-            <div className="input-display">
+            <div ref={inputContainer} className="input-display">
                 <Editor
                     editorState={inputState}
                     onChange={onChange}
@@ -56,7 +62,6 @@ export const CalculatorDisplay = React.forwardRef<Editor, Props>(({ inputState, 
 const inputKeyBindings = (e: React.KeyboardEvent<{}>) => {
     const { getDefaultKeyBinding, KeyBindingUtil } = Draft;
     const { key } = e;
-    console.log(key);
 
     //null - fall through to default
 
